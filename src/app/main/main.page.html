@@ -1,0 +1,124 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Mis tareas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <main class="task-page">
+    <section class="intro">
+      <p class="eyebrow">ORGANÍZATE MEJOR</p>
+      <h1>Tu lista de tareas</h1>
+      <p class="intro-copy">Anota lo que tienes pendiente y avanza a tu ritmo.</p>
+    </section>
+
+    <ion-list *ngIf="tareas.length > 0; else listaVacia" class="task-list" lines="none">
+      <ion-item *ngFor="let tarea of tareas" class="task-item">
+        <ion-checkbox
+          slot="start"
+          [checked]="tarea.completada"
+          [attr.aria-label]="'Marcar ' + tarea.titulo + ' como completada'"
+          (ionChange)="cambiarEstado(tarea, $event.detail.checked)"
+        ></ion-checkbox>
+
+        <ion-label class="ion-text-wrap">
+          <div class="task-heading">
+            <h2 [class.completed]="tarea.completada">{{ tarea.titulo }}</h2>
+            <ion-badge [color]="colorPrioridad(tarea.prioridad)">{{ tarea.prioridad }}</ion-badge>
+          </div>
+          <p *ngIf="tarea.descripcion" [class.completed]="tarea.completada">
+            {{ tarea.descripcion }}
+          </p>
+          <p *ngIf="!tarea.descripcion" class="no-description">Sin descripción</p>
+        </ion-label>
+
+        <ion-button
+          slot="end"
+          fill="clear"
+          color="danger"
+          [attr.aria-label]="'Eliminar ' + tarea.titulo"
+          (click)="eliminarTarea(tarea)"
+        >
+          <ion-icon slot="icon-only" name="trash-outline" aria-hidden="true"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <ng-template #listaVacia>
+      <section class="empty-state">
+        <ion-icon name="checkbox-outline" aria-hidden="true"></ion-icon>
+        <h2>Aún no tienes tareas</h2>
+        <p>Usa el botón + para agregar tu primera tarea.</p>
+      </section>
+    </ng-template>
+  </main>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button aria-label="Crear una tarea" (click)="abrirFormulario()">
+      <ion-icon name="add" aria-hidden="true"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+<ion-footer class="task-footer">
+  <ion-toolbar>
+    <ion-title size="small">
+      Pendientes: <ion-badge color="medium">{{ tareasPendientes }}</ion-badge>
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>
+
+<ion-modal [isOpen]="modalAbierto" (didDismiss)="cerrarFormulario()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Nueva tarea</ion-title>
+        <ion-button slot="end" fill="clear" (click)="cerrarFormulario()">Cancelar</ion-button>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <form [formGroup]="formulario" (ngSubmit)="guardarTarea()" novalidate>
+        <ion-item>
+          <ion-input
+            label="Título"
+            labelPlacement="stacked"
+            placeholder="Ej. Entregar el proyecto"
+            formControlName="titulo"
+            maxlength="100"
+            required
+          ></ion-input>
+        </ion-item>
+        <div class="validation-message" *ngIf="formulario.controls.titulo.touched && formulario.controls.titulo.errors?.['required']">
+          Escribe un título.
+        </div>
+        <div class="validation-message" *ngIf="formulario.controls.titulo.touched && formulario.controls.titulo.errors?.['minlength']">
+          El título debe tener al menos 5 caracteres.
+        </div>
+
+        <ion-item>
+          <ion-textarea
+            label="Descripción"
+            labelPlacement="stacked"
+            placeholder="Agrega un detalle (opcional)"
+            formControlName="descripcion"
+            autoGrow="true"
+            rows="3"
+          ></ion-textarea>
+        </ion-item>
+
+        <ion-item>
+          <ion-select label="Prioridad" labelPlacement="stacked" formControlName="prioridad" interface="popover">
+            <ion-select-option value="Alta">Alta</ion-select-option>
+            <ion-select-option value="Media">Media</ion-select-option>
+            <ion-select-option value="Baja">Baja</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-button class="save-button" expand="block" type="submit">
+          Guardar tarea
+        </ion-button>
+      </form>
+    </ion-content>
+  </ng-template>
+</ion-modal>

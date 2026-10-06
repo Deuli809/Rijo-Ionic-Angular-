@@ -1,0 +1,126 @@
+.task-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 16px 96px;
+}
+
+.intro {
+  margin: 8px 4px 24px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--ion-color-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.intro h1 {
+  margin: 0;
+  color: var(--ion-text-color);
+  font-size: clamp(1.7rem, 6vw, 2.25rem);
+  font-weight: 750;
+}
+
+.intro-copy {
+  margin: 8px 0 0;
+  color: var(--ion-color-medium);
+}
+
+.task-list {
+  padding: 0;
+  background: transparent;
+}
+
+.task-item {
+  --background: var(--ion-item-background, var(--ion-background-color));
+  --border-radius: 14px;
+  --padding-start: 14px;
+  --inner-padding-end: 8px;
+  margin-bottom: 12px;
+  border: 1px solid var(--ion-color-step-150, #e2e4e8);
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgb(0 0 0 / 4%);
+}
+
+.task-item ion-checkbox {
+  margin-inline-end: 14px;
+}
+
+.task-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 0 2px;
+}
+
+.task-heading h2 {
+  margin: 0;
+  color: var(--ion-text-color);
+  font-size: 1rem;
+  font-weight: 650;
+}
+
+.task-item ion-label p {
+  margin: 5px 0 13px;
+  color: var(--ion-color-medium-shade);
+  font-size: 0.9rem;
+}
+
+.task-item .completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.task-item ion-label p.no-description {
+  color: var(--ion-color-medium);
+  font-style: italic;
+}
+
+.empty-state {
+  display: grid;
+  justify-items: center;
+  padding: 52px 20px;
+  color: var(--ion-color-medium);
+  text-align: center;
+}
+
+.empty-state ion-icon {
+  color: var(--ion-color-primary);
+  font-size: 3rem;
+}
+
+.empty-state h2 {
+  margin: 14px 0 4px;
+  color: var(--ion-text-color);
+  font-size: 1.15rem;
+}
+
+.empty-state p {
+  margin: 0;
+}
+
+.task-footer ion-toolbar {
+  --min-height: 48px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+}
+
+.task-footer ion-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.validation-message {
+  padding: 6px 16px 2px;
+  color: var(--ion-color-danger);
+  font-size: 0.82rem;
+}
+
+.save-button {
+  margin-top: 24px;
+}
